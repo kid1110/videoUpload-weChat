@@ -1,0 +1,39 @@
+{
+  "pages": [
+    "pages/data/data",
+    "pages/index/index",
+    "pages/my/my"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "视频上传小程序",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#A1A1A1",
+    "selectedColor": "#A1A1A1",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/data/data",
+        "text": "数据",
+        "iconPath": "static/data-unselect.png",
+        "selectedIconPath": "static/data-selected.png"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "添加视频",
+        "iconPath": "static/video-unselect.png",
+        "selectedIconPath": "static/video-selected.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "static/my-unselect.png",
+        "selectedIconPath": "static/my-selected.png"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

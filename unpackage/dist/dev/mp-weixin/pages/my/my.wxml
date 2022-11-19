@@ -1,0 +1,1 @@
+<view class="my-container"><view class="userinfo"><button class="userinfo-avatar" open-type="chooseAvatar" bindchooseavatar="{{b}}"><image class="avatar" src="{{a}}"></image></button><input bindinput="{{c}}" type="input" class="userinfo-name" placeholder="请输入昵称"/></view></view>
