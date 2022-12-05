@@ -1,6 +1,5 @@
 {
   "pages": [
-    "pages/data/data",
     "pages/index/index",
     "pages/my/my"
   ],
@@ -16,12 +15,6 @@
     "borderStyle": "white",
     "list": [
       {
-        "pagePath": "pages/data/data",
-        "text": "数据",
-        "iconPath": "static/data-unselect.png",
-        "selectedIconPath": "static/data-selected.png"
-      },
-      {
         "pagePath": "pages/index/index",
         "text": "添加视频",
         "iconPath": "static/video-unselect.png",
@@ -34,6 +27,9 @@
         "selectedIconPath": "static/my-selected.png"
       }
     ]
+  },
+  "networkTimeout": {
+    "uploadFile": 600000
   },
   "usingComponents": {}
 }

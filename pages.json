@@ -1,9 +1,9 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		{
-			"path": "pages/data/data",
-			"style": {}
+	"easycom": {
+			"^u-(.*)": "@/uni_modules/vk-uview-ui/components/u-$1/u-$1.vue"
 		},
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	
 		{
 			"path": "pages/index/index",
 			"style": {}
@@ -17,13 +17,7 @@
 		"color": "#A1A1A1",
 		"selectedColor": "#A1A1A1",
 		"borderStyle": "white",
-		"list": [{
-				"pagePath": "pages/data/data",
-				"text": "数据",
-				"iconPath": "static/data-unselect.png",
-				"selectedIconPath": "static/data-selected.png"
-			
-			},
+		"list": [
 			{
 				"pagePath": "pages/index/index",
 				"text": "添加视频",

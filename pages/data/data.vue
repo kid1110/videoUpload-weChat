@@ -1,4 +1,7 @@
 <template>
+	<view>
+		test
+	</view>
 </template>
 
 <script>

@@ -31,14 +31,14 @@
 }
 .userinfo-name{
 		display: flex;
-		font-size: 25rpx;
+		font-size: 30rpx;
 		color: black;
-		margin: 10rpx;
+		margin: 20rpx;
 		text-align: center;
 }
 .login-button{
 		margin-top: 10px;
 		text-align: center;
-		border-radius: 0px;
+		border-radius: 2px;
 		font-size: 30rpx;
 }
