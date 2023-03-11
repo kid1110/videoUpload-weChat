@@ -114,78 +114,106 @@ import { APIS } from '../../staticData/Api';
 			},
 			//上传视频
 			uploadVideo(){
-				this.buttonDisable = true
-				for(let i = 0; i <this.videoList.length;i++){
-					let uploader = this.videoList[i]
-					console.log(uploader.Setting.filePath)
-					let jwt = uni.getStorageSync("token")
-					let uploadTask = uni.uploadFile({
-						url: APIS.uploadVideo,
-						filePath: uploader.Setting.filePath,
-						name: "test",
-						header: {
-							"Content-Type": "multipart/form-data",
-							"Authorization": jwt
-						},
-						success: (res)=>{
-							console.log(res)
-							console.log(res.data)
-							let re =  JSON.parse(res.data)
-							if(re.code === 1){
-								uni.showToast({
-									title:"上传成功",
-									duration: 1500
+				let judge = uni.getStorageSync("info")
+				if(!judge){
+					uni.showModal({
+						title: "提示",
+						content: "请完善个人信息",
+						success: function(res){
+							if(res.confirm){
+								//跳转
+								uni.navigateTo({
+									url: "/pages/info/info"
 								})
-								console.log(i)
-								
-								this.percent = 0
-								this.videoList.splice(i, 1);
-							}else{
-								this.videoList[i].Setting.percent = 0
-								uni.showToast({
-									title: re.msg,
-									duration:1500
-								})
-								this.buttonDisable = false
-							}
-						},
-						fail: (res)=>{
-							console.log(res)
-							console.log(res.data)
-							let re ={
-								msg: ""
-							}
-							if(typeof(res.data) !== "undefined" &&res.data !== null){
-								re =  JSON.parse(res.data)
-							}else{
-								re.msg = "上传终止"
-							}
-							uploader.Setting.percent = 0
-							uni.showToast({
-								title: re.msg,
-								duration:1500
-							})
-							this.abortTask = -1
-							this.buttonDisable = false
-						},
-						complete:()=>{
-							console.log(this.videoList.length)
-							if(i===0){
-								this.buttonDisable = false
+							}else if(res.cancel){
+								console.log("取消")
 							}
 						}
 						
 					})
-					// console.log("up",uploader.Setting.uploadTask)
-					console.log("up2",uploadTask)
-					// console.log("dn",uploader.Setting.uploadTask)
-					uploadTask.onProgressUpdate((res)=>{
-						uploader.Setting.percent = res.progress
-						if(this.abortTask ===i){
-							uploadTask.abort()
-						}
-					})
 				}
+				if(this.videoList.length === 0){
+					uni.showToast({
+						duration:500,
+						title:"暂无选择的视频",
+						icon:'none'
+					})
+					return;
+				}else{
+					this.buttonDisable = true
+					for(let i = 0; i <this.videoList.length;i++){
+						let uploader = this.videoList[i]
+						console.log(uploader.Setting.filePath)
+						let jwt = uni.getStorageSync("token")
+						let uploadTask = uni.uploadFile({
+							url: APIS.uploadVideo,
+							filePath: uploader.Setting.filePath,
+							name: "test",
+							header: {
+								"Content-Type": "multipart/form-data",
+								"Authorization": jwt
+							},
+							success: (res)=>{
+								console.log(res)
+								console.log(res.data)
+								let re =  JSON.parse(res.data)
+								if(re.code === 1){
+									uni.showToast({
+										title:"上传成功",
+										duration: 1500
+									})
+									console.log(i)
+									
+									this.percent = 0
+									this.videoList.splice(i, 1);
+								}else{
+									this.videoList[i].Setting.percent = 0
+									uni.showToast({
+										title: re.msg,
+										duration:1500
+									})
+									this.buttonDisable = false
+								}
+							},
+							fail: (res)=>{
+								console.log(res)
+								console.log(res.data)
+								let re ={
+									msg: ""
+								}
+								if(typeof(res.data) !== "undefined" &&res.data !== null){
+									re =  JSON.parse(res.data)
+								}else{
+									re.msg = "上传终止"
+								}
+								uploader.Setting.percent = 0
+								uni.showToast({
+									title: re.msg,
+									duration:1500
+								})
+								this.abortTask = -1
+								this.buttonDisable = false
+							},
+							complete:()=>{
+								console.log(this.videoList.length)
+								if(i===0){
+									this.buttonDisable = false
+								}
+							}
+							
+						})
+						// console.log("up",uploader.Setting.uploadTask)
+						console.log("up2",uploadTask)
+						// console.log("dn",uploader.Setting.uploadTask)
+						uploadTask.onProgressUpdate((res)=>{
+							uploader.Setting.percent = res.progress
+							if(this.abortTask ===i){
+								uploadTask.abort()
+							}
+						})
+					}
+				}
+				
 			},
 			// 删除视频
 			delectVideo(index) {
@@ -213,6 +241,12 @@ import { APIS } from '../../staticData/Api';
 	}
 </script>
 <style lang="scss">
+	page{
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		height: 100%;
+	}
 	/* 统一上传后显示的盒子宽高比 */
 	.uploader-container{
 		display: flex;

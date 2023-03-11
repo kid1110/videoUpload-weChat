@@ -3,9 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports[Symbol.toStringTag] = "Module";
 var common_vendor = require("./common/vendor.js");
 var staticData_Api = require("./staticData/Api.js");
+var utils_api = require("./utils/api.js");
+require("./utils/http.js");
+require("./utils/base.js");
+require("./utils/request.js");
 if (!Math) {
+  "./pages/data/data.js";
   "./pages/index/index.js";
   "./pages/my/my.js";
+  "./pages/info/info.js";
 }
 const _sfc_main = {
   data() {
@@ -17,12 +23,22 @@ const _sfc_main = {
   },
   onShow: function() {
     this.loginAuth();
+    this.getMyInfo();
     console.log("App Show");
   },
   onHide: function() {
     console.log("App Hide");
   },
   methods: {
+    getMyInfo() {
+      utils_api.getMyInfoApi().then((res) => {
+        if (res.code === 1) {
+          common_vendor.index.setStorageSync("info", true);
+        } else if (res.code === -513) {
+          common_vendor.index.setStorageSync("info", false);
+        }
+      });
+    },
     loginAuth() {
       let signCode;
       common_vendor.index.showToast({

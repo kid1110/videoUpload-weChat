@@ -1,5 +1,6 @@
 <script>
 	import {APIS} from "./staticData/Api.js"
+	import {getMyInfoApi} from "./utils/api.js"
 	export default {
 		data(){
 			return{
@@ -11,12 +12,23 @@
 		},
 		onShow: function() {
 			this.loginAuth()
+			this.getMyInfo()
 			console.log('App Show')
 		},
 		onHide: function() {
 			console.log('App Hide')
 		},
 		methods:{
+			getMyInfo(){
+				getMyInfoApi().then(res=>{
+					if(res.code === 1){
+						//如果信息存在则存入数据
+						uni.setStorageSync("info",true)
+					}else if(res.code === -513){
+						uni.setStorageSync("info",false)
+					}
+				})
+			},
 			 loginAuth(){
 				 let signCode
 				 //onlaunch时就进行登录

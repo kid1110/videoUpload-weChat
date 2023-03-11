@@ -23,6 +23,13 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+page {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  height: 100%;
+}
+
 /* 统一上传后显示的盒子宽高比 */
 .uploader-container {
   display: flex;

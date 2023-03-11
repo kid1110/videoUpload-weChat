@@ -5,9 +5,17 @@
 				<image class="avatar" :src="avatarUrl"></image>
 			</button>	
 			<input @blur="updateUserName" @input="getNickName" :value="nickname" type="input" class="userinfo-name"  placeholder="请输入昵称" />
+			<view v-if = "login">
+				<button  class="login-button" type="primary" @click="loginAuth">登录</button>
+			</view>
 		</view>
-		<view v-if = "login">
-			<button  class="login-button" type="primary" @click="loginAuth">登录</button>
+		
+		<view class="my-card">
+			<uni-list v-if="!login">
+				<uni-list-item class="my-info" showArrow title="个人信息"  link to="/pages/info/info">
+					
+				</uni-list-item>
+			</uni-list>
 		</view>
 	</view>
 </template>
@@ -16,6 +24,7 @@
 import { provide } from "vue"
 import {APIS} from '@/staticData/Api.js'
 import jwt_decode from "jwt-decode"
+import {updateUserNameApi} from '@/utils/api.js'
 		export default{
 			data(){
 				return{
@@ -40,8 +49,7 @@ import jwt_decode from "jwt-decode"
 			},
 			methods:{
 				getNickName(e){
-					console.log(e)
-					this.nickname = e.detail.value
+						this.nickname = e.detail.value
 				},
 				onChooseAvatar(e){
 					console.log("e",e)
@@ -100,34 +108,22 @@ import jwt_decode from "jwt-decode"
 				},
 				updateUserName(){
 					console.log(this.nickname)
-					uni.request({
-						url: APIS.updateName,
-						method:"PUT",
-						data:{
-							
-							username: this.nickname
-						},
-						header:{
-							"Content-Type": "application/x-www-form-urlencoded",
-							"Authorization": this.jwt
-						},
-						success: (res)=>{
-							console.log(res)
-							if(res.data.code === 1){
-								uni.showToast({
-									title: "用户名修改成功",
-									duration: 500
-								})
-								uni.setStorageSync("token",res.data.data)
-								this.nickname = jwt_decode(res.data.data).username
-							}else{
-								uni.showToast({
-									title: res.data.msg+"请先登录",
-									duration: 500,
-									icon:"error"
-								})
-								this.login = true
-							}
+					updateUserNameApi(this.nickname).then(res=>{
+						console.log(res)
+						if(res.code === 1){
+							uni.showToast({
+								title: "用户名修改成功",
+								duration: 500,
+								icon:"success"
+							})
+						}else{
+							uni.showToast({
+								title:res.msg,
+								duration:500,
+								icon:"error"
+							})
+							//需要重新登录
+							this.login = true
 						}
 					})
 				}
@@ -136,18 +132,104 @@ import jwt_decode from "jwt-decode"
 </script>
 
 <style>
+	page{
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		background-color: #e493d8; 
+		background-image:
+			radial-gradient(closest-side,rgba(235,105,78,1),rgba(235,105,78,0)),
+			radial-gradient(closest-side,rgba(243,11,164,1),rgba(243,11,164,0)),
+			radial-gradient(closest-side,rgba(254,234,131,1),rgba(254,234,131,0)),
+			radial-gradient(closest-side,rgba(170,142,245,1),rgba(170,142,245,0)),
+			radial-gradient(closest-side,rgba(248,192,147,1),rgba(248,192,147,0));
+		background-size: 
+			130vmax 130vmax,
+			80vmax 80vmax,
+			90vmax 90vmax,
+			110vmax 110vmax,
+			90vmax 90vmax;
+		background-position: 
+			-80vmax -80vmax,
+			60vmax -30vmax,
+			10vmax 10vmax,
+			-30vmax -10vmax,
+			50vmax 50vmax;
+		background-repeat: no-repeat;
+		animation: 3s movement linear infinite;
+	}
+	@keyframes movement{
+		0%, 100%{
+			background-size:
+				130vmax 130vmax,
+				80vmax 80vmax,
+				90vmax 90vmax,
+				110vmax 110vmax,
+				90vmax 90vmax;
+			background-position: 
+				-80vmax -80vmax,
+				60vmax -30vmax,
+				10vmax 10vmax,
+				-30vmax -10vmax,
+				50vmax 50vmax;
+		}
+		25%{
+			background-size:
+				100vmax 100vmax,
+				90vmax 90vmax,
+				100vmax 100vmax,
+				90vmax 90vmax,
+				60vmax 60vmax;
+			background-position: 
+				-60vmax -90vmax,
+				50vmax -40vmax,
+				0vmax -20vmax,
+				-40vmax -20vmax,
+				40vmax 60vmax;
+		}
+		50%{
+			background-size:
+				80vmax 80vmax,
+				110vmax 110vmax,
+				80vmax 80vmax,
+				60vmax 60vmax,
+				80vmax 80vmax;
+			background-position: 
+				-50vmax -70vmax,
+				40vmax -30vmax,
+				10vmax 0vmax,
+				20vmax 10vmax,
+				30vmax 70vmax;
+		}
+		75%{
+			background-size:
+				90vmax 90vmax,
+				90vmax 90vmax,
+				100vmax 100vmax,
+				90vmax 90vmax,
+				70vmax 70vmax;
+			background-position: 
+				-50vmax -40vmax,
+				50vmax -30vmax,
+				20vmax 0vmax,
+				-10vmax 10vmax,
+				40vmax 60vmax;
+		}
+	}
 	.my-container {
+		position: relative;
+		width: inherit;
+		height: inherit;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
 	}
 	.userinfo{
-		position: relative;
-		height: 100%;
-		margin-top: 30%;
-		margin-left: 50%;
-		margin-right: 50%;
+		position: absolute;
+		height: 30%;
+		top: 80rpx;
 		color: #fff;
 	}
 	.userinfo-avatar{
@@ -176,9 +258,25 @@ import jwt_decode from "jwt-decode"
 	}
 	
 	.login-button{
-		margin-top: 10px;
+		position: absolute;
+		bottom: 20rpx;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 200rpx;
 		text-align: center;
 		border-radius: 2px;
 		font-size: 30rpx;
+	}
+	.my-card{
+		position: absolute;
+		display: grid;
+		background-color: #fff;
+		border-radius: 20rpx;
+		margin-top: 10rpx;
+		box-shadow: 2rpx 2rpx 2rpx black;
+		opacity: .6;
+		width: 80%;
+		height: 60%;
+		bottom: 30rpx;
 	}
 </style>

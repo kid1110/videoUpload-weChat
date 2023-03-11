@@ -3,13 +3,22 @@
 			"^u-(.*)": "@/uni_modules/vk-uview-ui/components/u-$1/u-$1.vue"
 		},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-	
+		
+		{
+			"path": "pages/data/data",
+			"style": {
+				
+			}
+		},
 		{
 			"path": "pages/index/index",
 			"style": {}
 		},
 		{
 			"path": "pages/my/my",
+			"style": {}
+		},{
+			"path": "pages/info/info",
 			"style": {}
 		}
 	],
@@ -18,6 +27,12 @@
 		"selectedColor": "#A1A1A1",
 		"borderStyle": "white",
 		"list": [
+			{
+				"pagePath": "pages/data/data",
+				"text": "分析视频",
+				"iconPath": "static/data-unselect.png",
+				"selectedIconPath": "static/data-selected.png"
+			},
 			{
 				"pagePath": "pages/index/index",
 				"text": "添加视频",
@@ -33,9 +48,9 @@
 		]
 	},
 	"globalStyle": {
-		"navigationBarTextStyle": "black",
+		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "视频上传小程序",
-		"navigationBarBackgroundColor": "#F8F8F8",
+		"navigationBarBackgroundColor": "#FF6A6A",
 		"backgroundColor": "#F8F8F8"
 	},
 	

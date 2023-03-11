@@ -1,1 +1,1 @@
-<view> test </view>
+<view><video-card wx:for="{{a}}" wx:for-item="item" wx:key="a" bindrefreshVideos="{{item.b}}" bindrefreshModels="{{item.c}}" u-i="{{item.d}}" bind:__l="__l" u-p="{{item.e}}"></video-card></view>

@@ -85,73 +85,98 @@ const _sfc_main = {
       });
     },
     uploadVideo() {
-      this.buttonDisable = true;
-      for (let i = 0; i < this.videoList.length; i++) {
-        let uploader = this.videoList[i];
-        console.log(uploader.Setting.filePath);
-        let jwt = common_vendor.index.getStorageSync("token");
-        let uploadTask = common_vendor.index.uploadFile({
-          url: staticData_Api.APIS.uploadVideo,
-          filePath: uploader.Setting.filePath,
-          name: "test",
-          header: {
-            "Content-Type": "multipart/form-data",
-            "Authorization": jwt
-          },
-          success: (res) => {
-            console.log(res);
-            console.log(res.data);
-            let re = JSON.parse(res.data);
-            if (re.code === 1) {
-              common_vendor.index.showToast({
-                title: "\u4E0A\u4F20\u6210\u529F",
-                duration: 1500
+      let judge = common_vendor.index.getStorageSync("info");
+      if (!judge) {
+        common_vendor.index.showModal({
+          title: "\u63D0\u793A",
+          content: "\u8BF7\u5B8C\u5584\u4E2A\u4EBA\u4FE1\u606F",
+          success: function(res) {
+            if (res.confirm) {
+              common_vendor.index.navigateTo({
+                url: "/pages/info/info"
               });
-              console.log(i);
-              this.percent = 0;
-              this.videoList.splice(i, 1);
-            } else {
-              this.videoList[i].Setting.percent = 0;
+            } else if (res.cancel) {
+              console.log("\u53D6\u6D88");
+            }
+          }
+        });
+      }
+      if (this.videoList.length === 0) {
+        common_vendor.index.showToast({
+          duration: 500,
+          title: "\u6682\u65E0\u9009\u62E9\u7684\u89C6\u9891",
+          icon: "none"
+        });
+        return;
+      } else {
+        this.buttonDisable = true;
+        for (let i = 0; i < this.videoList.length; i++) {
+          let uploader = this.videoList[i];
+          console.log(uploader.Setting.filePath);
+          let jwt = common_vendor.index.getStorageSync("token");
+          let uploadTask = common_vendor.index.uploadFile({
+            url: staticData_Api.APIS.uploadVideo,
+            filePath: uploader.Setting.filePath,
+            name: "test",
+            header: {
+              "Content-Type": "multipart/form-data",
+              "Authorization": jwt
+            },
+            success: (res) => {
+              console.log(res);
+              console.log(res.data);
+              let re = JSON.parse(res.data);
+              if (re.code === 1) {
+                common_vendor.index.showToast({
+                  title: "\u4E0A\u4F20\u6210\u529F",
+                  duration: 1500
+                });
+                console.log(i);
+                this.percent = 0;
+                this.videoList.splice(i, 1);
+              } else {
+                this.videoList[i].Setting.percent = 0;
+                common_vendor.index.showToast({
+                  title: re.msg,
+                  duration: 1500
+                });
+                this.buttonDisable = false;
+              }
+            },
+            fail: (res) => {
+              console.log(res);
+              console.log(res.data);
+              let re = {
+                msg: ""
+              };
+              if (typeof res.data !== "undefined" && res.data !== null) {
+                re = JSON.parse(res.data);
+              } else {
+                re.msg = "\u4E0A\u4F20\u7EC8\u6B62";
+              }
+              uploader.Setting.percent = 0;
               common_vendor.index.showToast({
                 title: re.msg,
                 duration: 1500
               });
+              this.abortTask = -1;
               this.buttonDisable = false;
+            },
+            complete: () => {
+              console.log(this.videoList.length);
+              if (i === 0) {
+                this.buttonDisable = false;
+              }
             }
-          },
-          fail: (res) => {
-            console.log(res);
-            console.log(res.data);
-            let re = {
-              msg: ""
-            };
-            if (typeof res.data !== "undefined" && res.data !== null) {
-              re = JSON.parse(res.data);
-            } else {
-              re.msg = "\u4E0A\u4F20\u7EC8\u6B62";
+          });
+          console.log("up2", uploadTask);
+          uploadTask.onProgressUpdate((res) => {
+            uploader.Setting.percent = res.progress;
+            if (this.abortTask === i) {
+              uploadTask.abort();
             }
-            uploader.Setting.percent = 0;
-            common_vendor.index.showToast({
-              title: re.msg,
-              duration: 1500
-            });
-            this.abortTask = -1;
-            this.buttonDisable = false;
-          },
-          complete: () => {
-            console.log(this.videoList.length);
-            if (i === 0) {
-              this.buttonDisable = false;
-            }
-          }
-        });
-        console.log("up2", uploadTask);
-        uploadTask.onProgressUpdate((res) => {
-          uploader.Setting.percent = res.progress;
-          if (this.abortTask === i) {
-            uploadTask.abort();
-          }
-        });
+          });
+        }
       }
     },
     delectVideo(index) {
