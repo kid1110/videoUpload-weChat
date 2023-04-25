@@ -14,6 +14,15 @@ const _sfc_main = {
       modelList: []
     };
   },
+  onShareAppMessage(res) {
+    if (res.from === "button") {
+      console.log(res.target);
+    }
+    return {
+      title: "\u5206\u4EAB\u89C6\u9891\u4E0A\u4F20\u7CFB\u7EDF",
+      path: "/pages/data/data"
+    };
+  },
   onLoad() {
     this.getVideos();
     this.listModel();
@@ -85,4 +94,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   };
 }
 var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/wechat app/finalDesign/pages/data/data.vue"]]);
+_sfc_main.__runtimeHooks = 2;
 wx.createPage(MiniProgramPage);

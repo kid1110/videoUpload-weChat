@@ -15,21 +15,21 @@
 			<uni-collapse-item title="分析信息" v-if="getOutput || getModel">
 				<uni-list>
 					<uni-list-item title="模型名称" :note="modelName"></uni-list-item>
-					<uni-list-item class="out-list"  v-if="getOutput" :clickable="!startDownLoadVideo" @click="getNewVideo">
+					<uni-list-item class="out-list"  :clickable="!startDownLoadVideo" @click="getNewVideo" v-if="getOutput">
 						<!-- <template v-slot:footer>
 							<progress :percent="100">test</progress>
 						</template> -->
 						<template v-slot:body class="new-video">
 							<p>新视频名称:</p>
 							<p>{{handledNewVideoName}}</p>
-							<progress show-info :percent="videoPercent" v-if="startDownLoadVideo"></progress>
+							<progress show-info :percent="videoPercent" v-if="startDownLoadVideo" border-radius="5" activeColor="#FF6A6A"></progress>
 						</template>
 					</uni-list-item>
-					<uni-list-item v-if="getOutput" :clickable="!startDownLoadFile" @click="getNewOutput">
+					<uni-list-item v-if="getOutput" :clickable="!startDownLoadFile"  @click="getNewOutput">
 						<template v-slot:body class="new-video">
 							<p>新分析结果:</p>
 							<p>{{handledNewOutputName}}</p>
-							<progress show-info :percent="filePercent" v-if="startDownLoadFile"></progress>
+							<progress show-info :percent="filePercent" v-if="startDownLoadFile" border-radius="5" activeColor="#FF6A6A"></progress>
 						</template>
 					</uni-list-item>
 				</uni-list>	
@@ -216,6 +216,11 @@ import {deleteVideoApi,listModelApi,analysisVideoApi} from '@/utils/api.js'
 				}else{
 					this.startAnalysis = true
 					analysisVideoApi(this.analyVideoSrc,this.visitUrl).then(res=>{
+						if(res == undefined){
+							this.startAnalysis = false
+							return
+						}
+						console.log(res)
 						if(res.code === 1){
 							//如果分析成功
 							this.startAnalysis = false
@@ -269,8 +274,7 @@ import {deleteVideoApi,listModelApi,analysisVideoApi} from '@/utils/api.js'
 				this.index = e.detail.value
 				this.visitUrl = this.modelList[this.index].visitUrl
 				this.modelName = this.modelList[this.index].modelName
-				console.log("alalysis",this.visitUrl)
-				
+				console.log("alalysis",this.visitUrl)	
 				this.getModel =  true
 			},
 			deleteClose(){
@@ -279,6 +283,10 @@ import {deleteVideoApi,listModelApi,analysisVideoApi} from '@/utils/api.js'
 			deleteConfirm(){
 				this.startDelete = true
 				deleteVideoApi(this.vid).then(res=>{
+					if(res == undefined){
+						this.startDelete = false
+						return
+					}
 					if(res.code === 1){
 						uni.showToast({
 							duration:1000,

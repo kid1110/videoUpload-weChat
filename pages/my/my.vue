@@ -35,6 +35,15 @@ import {updateUserNameApi} from '@/utils/api.js'
 					jwt: ""
 				};
 			},
+			onShareAppMessage(res){
+				if(res.from === 'button'){
+					console.log(res.target)
+				}
+				return {
+					title: "分享视频上传系统",
+					path: "/pages/my/my"
+				}
+			},
 			onShow(){
 				this.jwt = uni.getStorageSync("token")
 				console.log(this.jwt)

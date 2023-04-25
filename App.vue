@@ -8,6 +8,8 @@
 			};
 		},
 		onLaunch: function() {
+			this.getAuth()
+			uni.setStorageSync("show",false)
 			
 		},
 		onShow: function() {
@@ -19,6 +21,17 @@
 			console.log('App Hide')
 		},
 		methods:{
+			getAuth(){
+				uni.authorize({
+					scope: 'filesystem',
+					 success() {
+					    console.log('授权成功')
+					  },
+					  fail() {
+					    console.log('授权失败')
+					  }
+				})
+			},
 			getMyInfo(){
 				getMyInfoApi().then(res=>{
 					if(res.code === 1){

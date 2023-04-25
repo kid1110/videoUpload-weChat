@@ -1,0 +1,50 @@
+page {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  height: 100%;
+}
+.upload-container {
+  width: 100px;
+  height: 210px;
+  position: relative;
+}
+.show-video {
+  width: 90px;
+  height: 90px;
+}
+.up-page {
+  margin-top: 5px;
+  width: 90px;
+  height: 90px;
+  border-radius: 8rpx;
+  overflow: visible;
+}
+.box-mode {
+  margin-top: 5px;
+  width: 90px;
+  height: 90px;
+  border-radius: 8rpx;
+  overflow: visible;
+}
+.show-box {
+  position: relative;
+  margin-top: 5px;
+  width: 90px;
+  height: 90px;
+  border-radius: 8rpx;
+  overflow: visible;
+}
+.show-box .delect-icon {
+  height: 40rpx;
+  width: 40rpx;
+  position: absolute;
+  right: 0rpx;
+  top: 0rpx;
+  z-index: 1000;
+}
+.full {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}

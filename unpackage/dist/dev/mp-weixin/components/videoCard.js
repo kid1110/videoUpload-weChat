@@ -149,6 +149,11 @@ const _sfc_main = {
       } else {
         this.startAnalysis = true;
         utils_api.analysisVideoApi(this.analyVideoSrc, this.visitUrl).then((res) => {
+          if (res == void 0) {
+            this.startAnalysis = false;
+            return;
+          }
+          console.log(res);
           if (res.code === 1) {
             this.startAnalysis = false;
             common_vendor.index.showToast({
@@ -209,6 +214,10 @@ const _sfc_main = {
     deleteConfirm() {
       this.startDelete = true;
       utils_api.deleteVideoApi(this.vid).then((res) => {
+        if (res == void 0) {
+          this.startDelete = false;
+          return;
+        }
         if (res.code === 1) {
           common_vendor.index.showToast({
             duration: 1e3,

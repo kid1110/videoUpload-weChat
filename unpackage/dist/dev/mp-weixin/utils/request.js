@@ -22,7 +22,7 @@ class Request {
         success: (res) => {
           if (res.statusCode && res.statusCode != 200) {
             common_vendor.index.showToast({
-              title: "\u8BF7\u6C42\u9519\u8BEF" + res.errMsg,
+              title: "\u8BF7\u6C42\u9519\u8BEF",
               icon: "none"
             });
             return;

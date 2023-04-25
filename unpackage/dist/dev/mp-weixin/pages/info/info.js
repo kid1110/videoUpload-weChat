@@ -15,32 +15,42 @@ const _sfc_main = {
         gender: 0,
         gym: 0,
         profession: "",
-        tall: 0,
+        tall: "",
         uid: 0,
-        education: 0
+        education: 0,
+        weight: ""
       },
       sexs: [{
-        text: "\u4FDD\u5BC6",
-        value: 0
-      }, {
         text: "\u5973",
-        value: 1
+        value: 0
       }, {
         text: "\u7537",
-        value: 2
+        value: 1
       }],
       gyms: [{
-        text: "\u4FDD\u5BC6",
+        text: "1\u5C0F\u65F6\u4EE5\u4E0B",
         value: 0
       }, {
-        text: "\u662F",
+        text: "1-2\u5C0F\u65F6",
         value: 1
       }, {
-        text: "\u5426",
+        text: "2\u5C0F\u65F6\u4EE5\u4E0A",
         value: 2
       }],
-      tallList: [],
-      eduList: ["\u5C0F\u5B66\u4EE5\u4E0B", "\u5C0F\u5B66", "\u521D\u4E2D", "\u9AD8\u4E2D", "\u5927\u5B66\u4E13\u79D1", "\u5927\u5B66\u672C\u79D1", "\u7855\u58EB", "\u535A\u58EB", "\u535A\u58EB\u540E"],
+      profession: [{
+        text: "\u5B66\u751F",
+        value: "\u5B66\u751F"
+      }, {
+        text: "\u5728\u804C",
+        value: "\u5728\u804C"
+      }, {
+        text: "\u5F85\u4E1A",
+        value: "\u5F85\u4E1A"
+      }, {
+        text: "\u9000\u4F11",
+        value: "\u9000\u4F11"
+      }],
+      eduList: ["\u5C0F\u5B66\u4EE5\u4E0B", "\u5C0F\u5B66", "\u521D\u4E2D", "\u9AD8\u4E2D", "\u5927\u5B66\u4E13\u79D1", "\u5927\u5B66\u672C\u79D1", "\u7855\u58EB", "\u535A\u58EB"],
       rules: {
         name: {
           rules: [{
@@ -57,13 +67,22 @@ const _sfc_main = {
             errorMessage: "\u5E74\u9F84\u53EA\u80FD\u4E3A\u6570\u5B57"
           }]
         },
-        profession: {
+        weight: {
           rules: [{
             required: true,
-            errorMessage: "\u8BF7\u586B\u5199\u804C\u4E1A"
+            errorMessage: "\u4F53\u91CD\u4E0D\u80FD\u4E3A\u7A7A"
           }, {
-            maxLength: 100,
-            errMessage: "\u804C\u4E1A\u540D\u79F0\u4E0D\u80FD\u5927\u4E8E100\u5B57"
+            format: "number",
+            errorMessage: "\u4F53\u91CD\u53EA\u80FD\u4E3A\u6570\u5B57"
+          }]
+        },
+        height: {
+          rules: [{
+            required: true,
+            errorMessage: "\u8EAB\u9AD8\u4E0D\u80FD\u4E3A\u7A7A"
+          }, {
+            format: "number",
+            errorMessage: "\u8EAB\u9AD8\u53EA\u80FD\u4E3A\u6570\u5B57"
           }]
         }
       }
@@ -74,14 +93,25 @@ const _sfc_main = {
     let jwt = common_vendor.index.getStorageSync("token");
     this.userInfo.uid = Number(common_vendor.o$1(jwt).uid);
   },
+  onShareAppMessage(res) {
+    if (res.from === "button") {
+      console.log(res.target);
+    }
+    return {
+      title: "\u5206\u4EAB\u89C6\u9891\u4E0A\u4F20\u7CFB\u7EDF",
+      path: "/pages/info/info"
+    };
+  },
   onLoad() {
   },
   onReady() {
-    this.initTallList();
   },
   methods: {
     submit() {
       this.$refs["baseForm"].validate().then((res) => {
+        if (res == void 0) {
+          return;
+        }
         console.log("success", res);
         console.log("entity", this.userInfo);
         this.startSubmit = true;
@@ -176,47 +206,60 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       modelValue: $data.userInfo.gym
     }),
     n: common_vendor.p({
-      label: "\u662F\u5426\u5EFA\u8EAB",
+      label: "\u6BCF\u5468\u4E3B\u52A8\u953B\u70BC",
       required: true
     }),
-    o: common_vendor.o(($event) => _ctx.binddata("profession", $event.detail.value)),
-    p: common_vendor.o(($event) => $data.userInfo.profession = $event),
-    q: common_vendor.p({
-      placeholder: "\u8BF7\u8F93\u5165\u60A8\u7684\u804C\u4E1A",
+    o: common_vendor.o(($event) => $data.userInfo.profession = $event),
+    p: common_vendor.p({
+      localdata: $data.profession,
       modelValue: $data.userInfo.profession
     }),
-    r: common_vendor.p({
+    q: common_vendor.p({
       label: "\u804C\u4E1A",
-      required: true,
-      name: "profession"
-    }),
-    s: common_vendor.t($data.tallList[$data.tallIndex]),
-    t: $data.tallList,
-    v: $data.tallIndex,
-    w: common_vendor.o((...args) => $options.tallChange && $options.tallChange(...args)),
-    x: common_vendor.p({
-      label: "\u8EAB\u9AD8",
       required: true
     }),
-    y: common_vendor.t($data.eduList[$data.eduIndex]),
-    z: $data.eduList,
-    A: common_vendor.o((...args) => $options.eduChange && $options.eduChange(...args)),
-    B: common_vendor.p({
+    r: common_vendor.o(($event) => _ctx.binddata("weight", $event.detail.value)),
+    s: common_vendor.o(($event) => $data.userInfo.weight = $event),
+    t: common_vendor.p({
+      placeholder: "\u8BF7\u8F93\u5165\u60A8\u7684\u4F53\u91CD(kg)",
+      modelValue: $data.userInfo.weight
+    }),
+    v: common_vendor.p({
+      label: "\u4F53\u91CD",
+      required: true,
+      name: "weight"
+    }),
+    w: common_vendor.o(($event) => _ctx.binddata("height", $event.detail.value)),
+    x: common_vendor.o(($event) => $data.userInfo.tall = $event),
+    y: common_vendor.p({
+      placeholder: "\u8BF7\u8F93\u5165\u60A8\u7684\u8EAB\u9AD8(cm)",
+      modelValue: $data.userInfo.tall
+    }),
+    z: common_vendor.p({
+      label: "\u8EAB\u9AD8",
+      required: true,
+      name: "height"
+    }),
+    A: common_vendor.t($data.eduList[$data.eduIndex]),
+    B: $data.eduList,
+    C: common_vendor.o((...args) => $options.eduChange && $options.eduChange(...args)),
+    D: common_vendor.p({
       label: "\u6559\u80B2\u7A0B\u5EA6",
       required: true
     }),
-    C: common_vendor.sr("baseForm", "4d645cdc-0"),
-    D: common_vendor.p({
+    E: common_vendor.sr("baseForm", "4d645cdc-0"),
+    F: common_vendor.p({
       modelValue: $data.userInfo,
       labelPosition: "left",
       labelWidth: "80px",
       rules: $data.rules,
       validateTrigger: "bind"
     }),
-    E: common_vendor.o((...args) => $options.submit && $options.submit(...args)),
-    F: $data.startSubmit,
-    G: $data.startSubmit
+    G: common_vendor.o((...args) => $options.submit && $options.submit(...args)),
+    H: $data.startSubmit,
+    I: $data.startSubmit
   };
 }
 var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/wechat app/finalDesign/pages/info/info.vue"]]);
+_sfc_main.__runtimeHooks = 2;
 wx.createPage(MiniProgramPage);

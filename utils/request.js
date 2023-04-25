@@ -29,7 +29,7 @@ export default class Request{
 				success: (res)=>{
 					if(res.statusCode && res.statusCode != 200){
 						uni.showToast({
-							title: "请求错误" +res.errMsg,
+							title: "请求错误",
 							icon:"none"
 						});
 						return;

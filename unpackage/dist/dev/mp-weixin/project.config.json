@@ -5,10 +5,10 @@
     "include": []
   },
   "setting": {
-    "urlCheck": false,
+    "urlCheck": true,
     "es6": true,
-    "postcss": false,
-    "minified": false,
+    "postcss": true,
+    "minified": true,
     "newFeature": true,
     "bigPackageSizeSupport": true,
     "coverView": true,
@@ -36,7 +36,7 @@
   },
   "compileType": "miniprogram",
   "libVersion": "",
-  "appid": "wx3830ea54a9a48421",
+  "appid": "wx7ac18e98fdb4dac4",
   "projectname": "finalDesign",
   "condition": {},
   "editorSetting": {

@@ -6338,6 +6338,22 @@ const createSubpackageApp = initCreateSubpackageApp();
   wx.createPluginApp = global.createPluginApp = createPluginApp;
   wx.createSubpackageApp = global.createSubpackageApp = createSubpackageApp;
 }
+function mitt(n2) {
+  return { all: n2 = n2 || /* @__PURE__ */ new Map(), on: function(t2, e2) {
+    var i2 = n2.get(t2);
+    i2 ? i2.push(e2) : n2.set(t2, [e2]);
+  }, off: function(t2, e2) {
+    var i2 = n2.get(t2);
+    i2 && (e2 ? i2.splice(i2.indexOf(e2) >>> 0, 1) : n2.set(t2, []));
+  }, emit: function(t2, e2) {
+    var i2 = n2.get(t2);
+    i2 && i2.slice().map(function(n3) {
+      n3(e2);
+    }), (i2 = n2.get("*")) && i2.slice().map(function(n3) {
+      n3(t2, e2);
+    });
+  } };
+}
 var sparkMd5 = { exports: {} };
 (function(module, exports2) {
   (function(factory) {
@@ -6818,6 +6834,10 @@ const pages = [
   {
     path: "pages/info/info",
     style: {}
+  },
+  {
+    path: "pages/show/show",
+    style: {}
   }
 ];
 const tabBar = {
@@ -6825,6 +6845,12 @@ const tabBar = {
   selectedColor: "#A1A1A1",
   borderStyle: "white",
   list: [
+    {
+      pagePath: "pages/show/show",
+      text: "\u624B\u52BF\u7814\u7A76",
+      iconPath: "static/first-unselect.png",
+      selectedIconPath: "static/first-selected.png"
+    },
     {
       pagePath: "pages/data/data",
       text: "\u5206\u6790\u89C6\u9891",
@@ -9071,6 +9097,7 @@ exports.e = e$1;
 exports.f = f$1;
 exports.index = index;
 exports.initVueI18n = initVueI18n;
+exports.mitt = mitt;
 exports.n = n$2;
 exports.o = o$2;
 exports.o$1 = o$1;

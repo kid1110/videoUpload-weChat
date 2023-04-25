@@ -3,7 +3,6 @@
 			"^u-(.*)": "@/uni_modules/vk-uview-ui/components/u-$1/u-$1.vue"
 		},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		
 		{
 			"path": "pages/data/data",
 			"style": {
@@ -20,13 +19,23 @@
 		},{
 			"path": "pages/info/info",
 			"style": {}
+		},{
+			"path": "pages/show/show",
+			"style": {
+				
+			}
 		}
 	],
 	"tabBar": {
 		"color": "#A1A1A1",
 		"selectedColor": "#A1A1A1",
 		"borderStyle": "white",
-		"list": [
+		"list": [{
+				"pagePath": "pages/show/show",
+				"text": "手势研究",
+				"iconPath": "static/first-unselect.png",
+				"selectedIconPath": "static/first-selected.png"
+			},
 			{
 				"pagePath": "pages/data/data",
 				"text": "分析视频",

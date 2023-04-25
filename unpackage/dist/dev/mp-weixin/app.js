@@ -12,6 +12,7 @@ if (!Math) {
   "./pages/index/index.js";
   "./pages/my/my.js";
   "./pages/info/info.js";
+  "./pages/show/show.js";
 }
 const _sfc_main = {
   data() {
@@ -20,6 +21,8 @@ const _sfc_main = {
     };
   },
   onLaunch: function() {
+    this.getAuth();
+    common_vendor.index.setStorageSync("show", false);
   },
   onShow: function() {
     this.loginAuth();
@@ -30,6 +33,17 @@ const _sfc_main = {
     console.log("App Hide");
   },
   methods: {
+    getAuth() {
+      common_vendor.index.authorize({
+        scope: "filesystem",
+        success() {
+          console.log("\u6388\u6743\u6210\u529F");
+        },
+        fail() {
+          console.log("\u6388\u6743\u5931\u8D25");
+        }
+      });
+    },
     getMyInfo() {
       utils_api.getMyInfoApi().then((res) => {
         if (res.code === 1) {
@@ -97,11 +111,11 @@ const _sfc_main = {
   }
 };
 var App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/wechat app/finalDesign/App.vue"]]);
+const emitter = common_vendor.mitt();
+const app = common_vendor.createSSRApp(App);
+app.config.globalProperties.emitter = emitter;
 function createApp() {
-  const app = common_vendor.createSSRApp(App);
-  return {
-    app
-  };
+  return { app };
 }
 createApp().app.mount("#app");
 exports.createApp = createApp;

@@ -7,6 +7,7 @@
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {
+		"requiredPermissions": ["filesystem"],
         "usingComponents" : true,
         "nvueStyleCompiler" : "uni-app",
         "compilerVersion" : 3,
@@ -50,9 +51,11 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wx3830ea54a9a48421",
+        "appid" : "wx7ac18e98fdb4dac4",
         "setting" : {
-            "urlCheck" : false
+            "urlCheck" : true,
+            "minified" : true,
+            "postcss" : true
         },
         "usingComponents" : true
     },
@@ -69,7 +72,7 @@
         "enable" : false
     },
     "vueVersion" : "3",
-	"networkTimeout" : {
-		"uploadFile": 600000
-	}
+    "networkTimeout" : {
+        "uploadFile" : 600000
+    }
 }

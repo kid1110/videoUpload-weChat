@@ -1,20 +1,23 @@
 <template>
 	<!-- 上传视频或者图片 -->
 	<view v-if="login" class="uploader-container" >
-		<view class="up-page">
-			<!--视频-->
-			<view class="show-box" v-for="(item1, index1) in videoList" :key="index1">
-				<video class="full" :src="item1.Setting.filePath"></video>
-				<view  class="delect-icon" @tap="delectVideo(index1)">
-					<image class="full" :src="clearIcon" mode=""></image>
+		<view class="up-page">	
+				<!--视频-->
+				<view class="show-box" v-for="(item1, index1) in videoList" :key="index1">
+					<video class="full" :src="item1.Setting.filePath"></video>
+					<view  class="delect-icon" @tap="delectVideo(index1)">
+						<image class="full" :src="clearIcon" mode=""></image>
+					</view>
+					<view class="progress-box">
+						<progress class="upload-progress"  :percent="item1.Setting.percent" stroke-width="3" color="#10AEFF" active="true" active-mode="forwards" backgroundColor="#d9d9d9"></progress>
+					</view>
 				</view>
-				<view class="progress-box">
-					<progress class="upload-progress"  :percent="item1.Setting.percent" stroke-width="3" color="#10AEFF" active="true" active-mode="forwards" backgroundColor="#d9d9d9"></progress>
+				<view v-if="VideoOfImagesShow" @tap="chooseVideoImage" class="box-mode">
+					<!-- <view class="uni-badge-left-margin">
+						<uni-badge  isDot="true" absolute="rightTop" :text="value" size="small" type="error"></uni-badge>
+					</view> -->
+					<image class="full" :src="selectfile" mode=""></image>
 				</view>
-			</view>
-			<view v-if="VideoOfImagesShow" @tap="chooseVideoImage" class="box-mode">
-				<image class="full" :src="selectfile" mode=""></image>
-			</view>
 		</view>
 		<view class="up-btn">
 			<button class="button" type="primary" @tap="uploadVideo" :disabled="buttonDisable">上传视频</button>
@@ -34,6 +37,7 @@ import { APIS } from '../../staticData/Api';
 	export default {
 		data() {
 			return {
+				value: 1,
 				login: false,
 				buttonDisable: false,
 				abortTask: -1,
@@ -55,6 +59,15 @@ import { APIS } from '../../staticData/Api';
 				}],
 				cameraIndex: 0, //上传视频时的数量
 				maxCount:9//图片和视频允许上传的总数
+			}
+		},
+		onShareAppMessage(res){
+			if(res.from === 'button'){
+				console.log(res.target)
+			}
+			return {
+				title: "分享视频上传系统",
+				path: "/pages/index/index"
 			}
 		},
 		onShow(){
@@ -131,8 +144,7 @@ import { APIS } from '../../staticData/Api';
 						}
 						
 					})
-				}
-				if(this.videoList.length === 0){
+				}else if(this.videoList.length === 0){
 					uni.showToast({
 						duration:500,
 						title:"暂无选择的视频",
@@ -262,11 +274,23 @@ import { APIS } from '../../staticData/Api';
 		
 		border-radius: 8rpx;
 		overflow: visible;
+		
+		
 	}
+	.uni-badge-left-margin {
+			height: 40rpx;
+			width: 40rpx;
+			position: absolute;
+			right: 0rpx;
+			top:0rpx;
+			z-index: 1000;
+		}
 	
 	.full {
 		width: 100%;
 		height: 100%;
+		position: relative;
+		
 	}
  
 	.up-page {
@@ -291,6 +315,7 @@ import { APIS } from '../../staticData/Api';
 				top: 0rpx;
 				z-index: 1000;
 			}
+			
 			.progress-box{
 				z-index: 1001;
 				height: 20rpx;
@@ -314,6 +339,7 @@ import { APIS } from '../../staticData/Api';
 			font-size: 30rpx;
 		}
 	}
+	
 	
  
 </style>

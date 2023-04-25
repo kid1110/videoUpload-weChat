@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "upload-card": "../../components/uploadCard",
+    "uni-title": "../../uni_modules/uni-title/components/uni-title/uni-title",
+    "uni-section": "../../uni_modules/uni-section/components/uni-section/uni-section"
+  }
+}

@@ -10,6 +10,7 @@ var sourceType = [
 const _sfc_main = {
   data() {
     return {
+      value: 1,
       login: false,
       buttonDisable: false,
       abortTask: -1,
@@ -30,6 +31,15 @@ const _sfc_main = {
       }],
       cameraIndex: 0,
       maxCount: 9
+    };
+  },
+  onShareAppMessage(res) {
+    if (res.from === "button") {
+      console.log(res.target);
+    }
+    return {
+      title: "\u5206\u4EAB\u89C6\u9891\u4E0A\u4F20\u7CFB\u7EDF",
+      path: "/pages/index/index"
     };
   },
   onShow() {
@@ -100,8 +110,7 @@ const _sfc_main = {
             }
           }
         });
-      }
-      if (this.videoList.length === 0) {
+      } else if (this.videoList.length === 0) {
         common_vendor.index.showToast({
           duration: 500,
           title: "\u6682\u65E0\u9009\u62E9\u7684\u89C6\u9891",
@@ -222,4 +231,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   }) : {});
 }
 var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/wechat app/finalDesign/pages/index/index.vue"]]);
+_sfc_main.__runtimeHooks = 2;
 wx.createPage(MiniProgramPage);

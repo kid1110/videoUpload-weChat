@@ -3,7 +3,8 @@
     "pages/data/data",
     "pages/index/index",
     "pages/my/my",
-    "pages/info/info"
+    "pages/info/info",
+    "pages/show/show"
   ],
   "window": {
     "navigationBarTextStyle": "white",
@@ -16,6 +17,12 @@
     "selectedColor": "#A1A1A1",
     "borderStyle": "white",
     "list": [
+      {
+        "pagePath": "pages/show/show",
+        "text": "手势研究",
+        "iconPath": "static/first-unselect.png",
+        "selectedIconPath": "static/first-selected.png"
+      },
       {
         "pagePath": "pages/data/data",
         "text": "分析视频",

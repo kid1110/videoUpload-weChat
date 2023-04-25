@@ -43,5 +43,9 @@
 }
 .form-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+}
+.name-text {
+  font-size: 30rpx;
+  color: grey;
 }

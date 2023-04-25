@@ -60,7 +60,8 @@ export function insertUserInfo(userInfo){
 			gender: userInfo.gender,
 			profession: userInfo.profession,
 			education: userInfo.education,
-			tall: userInfo.tall
+			tall: userInfo.tall,
+			weight: userInfo.weight
 		},
 	})
 }

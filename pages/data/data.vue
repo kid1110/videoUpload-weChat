@@ -17,6 +17,15 @@
 				modelList:[],
 			};
 		},
+		onShareAppMessage(res){
+			if(res.from === 'button'){
+				console.log(res.target)
+			}
+			return {
+				title: "分享视频上传系统",
+				path: "/pages/data/data"
+			}
+		},
 		onLoad() {
 			this.getVideos()
 			this.listModel()
