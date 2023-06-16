@@ -6820,7 +6820,7 @@ const easycom = {
 };
 const pages = [
   {
-    path: "pages/data/data",
+    path: "pages/show/show",
     style: {}
   },
   {
@@ -6836,7 +6836,7 @@ const pages = [
     style: {}
   },
   {
-    path: "pages/show/show",
+    path: "pages/data/data",
     style: {}
   }
 ];

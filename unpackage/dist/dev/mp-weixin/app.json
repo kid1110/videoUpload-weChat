@@ -1,10 +1,10 @@
 {
   "pages": [
-    "pages/data/data",
+    "pages/show/show",
     "pages/index/index",
     "pages/my/my",
     "pages/info/info",
-    "pages/show/show"
+    "pages/data/data"
   ],
   "window": {
     "navigationBarTextStyle": "white",

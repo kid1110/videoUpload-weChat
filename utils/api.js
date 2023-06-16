@@ -26,6 +26,12 @@ export function deleteVideoApi(videoId){
 		}
 	})
 }
+export function getIeVideos(){
+	return request({
+		url: `${base.url}/getIeVideos`,
+		method: "GET",
+	})
+}
 export function listModelApi(){
 	return request({
 		url: `${base.url}/getAllModel`,

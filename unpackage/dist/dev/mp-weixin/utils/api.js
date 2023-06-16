@@ -26,6 +26,12 @@ function deleteVideoApi(videoId) {
     }
   });
 }
+function getIeVideos() {
+  return request({
+    url: `${utils_base.base.url}/getIeVideos`,
+    method: "GET"
+  });
+}
 function listModelApi() {
   return request({
     url: `${utils_base.base.url}/getAllModel`,
@@ -67,6 +73,7 @@ function insertUserInfo(userInfo) {
 }
 exports.analysisVideoApi = analysisVideoApi;
 exports.deleteVideoApi = deleteVideoApi;
+exports.getIeVideos = getIeVideos;
 exports.getMyInfoApi = getMyInfoApi;
 exports.getMyVideosApi = getMyVideosApi;
 exports.insertUserInfo = insertUserInfo;

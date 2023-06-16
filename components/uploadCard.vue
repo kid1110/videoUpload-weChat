@@ -1,6 +1,6 @@
 <template>
 	<view class="upload-container">
-		<video class="show-video" src="../../static/video/1.mp4"></video>
+		<video class="show-video" :src="showVidSrc"></video>
 		<view class="up-page">
 				<!--视频-->
 				<view class="show-box" v-if="uploadVideo !== null">
@@ -23,6 +23,7 @@
 import {inject} from 'vue'
 import { APIS } from '../staticData/Api'
 import BigUpload from '../utils/upload'
+import base from '../utils/base.js'
 	export default{
 		name: "uploadCard",
 		props:{
@@ -63,13 +64,12 @@ import BigUpload from '../utils/upload'
 			}
 		},
 		onReady() {
-			console.log("show data:",'@/static/video/'+this.showVideoSrc)
+			console.log("show data:",`${base.url}/ieVideos/`+this.showVideoSrc)
 		},
 		computed:{
 			showVidSrc(){
-				uni.getFileSystemManager().readdir()
-				console.log("show data:",'../../static/video/'+this.showVideoSrc)
-				return '../video/'+this.showVideoSrc
+				console.log("show data:",`${base.url}/ieVideos/`+this.showVideoSrc)
+				return `${base.url}/ieVideos/`+this.showVideoSrc
 			}
 		},
 		methods:{

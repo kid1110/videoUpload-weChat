@@ -13,6 +13,13 @@
 	<view class="analysis-guide">
 		<uni-section title="分析视频指南" type="line">
 			<p>&nbsp;&nbsp;尝试视频分析的时候麻烦选择模型<string>test</string><br></p>
+			
+			<view class="mark">
+				<p>&nbsp;&nbsp;开发单位：</p>
+				<p>&nbsp;&nbsp;广东工业大学</p>
+				<p>&nbsp;&nbsp;广州医科大学附属脑科医院</p>
+				<p>&nbsp;&nbsp;广州杰超科技有限公司</p>
+			</view>
 			<p class="analy-p">
 			</p>
 		</uni-section>
@@ -25,6 +32,7 @@
 <script>
 	import {reactive} from 'vue'
 	import uploadCard from "../../components/uploadCard.vue"
+	import {getIeVideos} from "../../utils/api.js"
 	export default{
 		components:{
 			uploadCard
@@ -57,15 +65,27 @@
 				this.uploadCount++
 			},
 			getStaticVideo(){
-				uni.getFileSystemManager().readdir({
-					dirPath: '/static/video',
-					success: (res)=>{
-						this.videoCount = res.files.length
-						this.showVideoNames = res.files
-						console.log('video Count: ',this.videoCount)
-						console.log('showVideoNames : ',this.showVideoNames)
+				// uni.getFileSystemManager().readdir({
+				// 	dirPath: '/static/video',
+				// 	success: (res)=>{
+				// 		this.videoCount = res.files.length
+				// 		this.showVideoNames = res.files
+				// 		console.log('video Count: ',this.videoCount)
+				// 		console.log('showVideoNames : ',this.showVideoNames)
+				// 	}
+				// })
+				getIeVideos().then(res=>{
+					if(res.code === 1){
+						console.log("tewf",res)
+						this.showVideoNames = res.data.sort((a,b)=>{
+							 const aNum = parseInt(a.match(/\d+/)[0]); // 提取字符串中的数字部分并转换为数字
+							  const bNum = parseInt(b.match(/\d+/)[0]); 
+							  return aNum - bNum; // 按照数字大小进行排序
+						})
+						this.videoCount = this.showVideoNames.length
+						
 					}
-				})
+				}).catch(err=>console.log(err))
 			},
 			uploadVideo(){
 				if(this.videoCount !== this.uploadCount){
@@ -111,5 +131,8 @@
 	}
 	.button{
 		font-size: 30rpx;
+	}
+	.mark{
+		margin-top: 10px;
 	}
 </style>

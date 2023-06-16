@@ -8,11 +8,11 @@ require("./utils/http.js");
 require("./utils/base.js");
 require("./utils/request.js");
 if (!Math) {
-  "./pages/data/data.js";
+  "./pages/show/show.js";
   "./pages/index/index.js";
   "./pages/my/my.js";
   "./pages/info/info.js";
-  "./pages/show/show.js";
+  "./pages/data/data.js";
 }
 const _sfc_main = {
   data() {

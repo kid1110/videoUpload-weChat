@@ -27,3 +27,6 @@
 .button{
 		font-size: 30rpx;
 }
+.mark{
+		margin-top: 10px;
+}

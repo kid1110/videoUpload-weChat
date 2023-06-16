@@ -2,6 +2,7 @@
 var common_vendor = require("../common/vendor.js");
 var staticData_Api = require("../staticData/Api.js");
 var utils_upload = require("../utils/upload.js");
+var utils_base = require("../utils/base.js");
 const _sfc_main = {
   name: "uploadCard",
   props: {
@@ -41,13 +42,12 @@ const _sfc_main = {
     };
   },
   onReady() {
-    console.log("show data:", "@/static/video/" + this.showVideoSrc);
+    console.log("show data:", `${utils_base.base.url}/ieVideos/` + this.showVideoSrc);
   },
   computed: {
     showVidSrc() {
-      common_vendor.index.getFileSystemManager().readdir();
-      console.log("show data:", "../../static/video/" + this.showVideoSrc);
-      return "../video/" + this.showVideoSrc;
+      console.log("show data:", `${utils_base.base.url}/ieVideos/` + this.showVideoSrc);
+      return `${utils_base.base.url}/ieVideos/` + this.showVideoSrc;
     }
   },
   methods: {
@@ -148,17 +148,18 @@ const _sfc_main = {
 };
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
-    a: $data.uploadVideo !== null
+    a: $options.showVidSrc,
+    b: $data.uploadVideo !== null
   }, $data.uploadVideo !== null ? {
-    b: $data.uploadVideo.Setting.filePath,
-    c: $data.clearIcon,
-    d: common_vendor.o((...args) => $options.delectVideo && $options.delectVideo(...args)),
-    e: $data.uploadVideo.Setting.percent
+    c: $data.uploadVideo.Setting.filePath,
+    d: $data.clearIcon,
+    e: common_vendor.o((...args) => $options.delectVideo && $options.delectVideo(...args)),
+    f: $data.uploadVideo.Setting.percent
   } : {}, {
-    f: $data.VideoShow
+    g: $data.VideoShow
   }, $data.VideoShow ? {
-    g: $data.selectfile,
-    h: common_vendor.o((...args) => $options.chooseVideoImage && $options.chooseVideoImage(...args))
+    h: $data.selectfile,
+    i: common_vendor.o((...args) => $options.chooseVideoImage && $options.chooseVideoImage(...args))
   } : {});
 }
 var Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/wechat app/finalDesign/components/uploadCard.vue"]]);

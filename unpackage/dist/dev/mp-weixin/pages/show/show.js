@@ -1,5 +1,8 @@
 "use strict";
 var common_vendor = require("../../common/vendor.js");
+var utils_api = require("../../utils/api.js");
+require("../../utils/base.js");
+require("../../utils/request.js");
 const uploadCard = () => "../../components/uploadCard.js";
 const _sfc_main = {
   components: {
@@ -32,15 +35,17 @@ const _sfc_main = {
       this.uploadCount++;
     },
     getStaticVideo() {
-      common_vendor.index.getFileSystemManager().readdir({
-        dirPath: "/static/video",
-        success: (res) => {
-          this.videoCount = res.files.length;
-          this.showVideoNames = res.files;
-          console.log("video Count: ", this.videoCount);
-          console.log("showVideoNames : ", this.showVideoNames);
+      utils_api.getIeVideos().then((res) => {
+        if (res.code === 1) {
+          console.log("tewf", res);
+          this.showVideoNames = res.data.sort((a, b) => {
+            const aNum = parseInt(a.match(/\d+/)[0]);
+            const bNum = parseInt(b.match(/\d+/)[0]);
+            return aNum - bNum;
+          });
+          this.videoCount = this.showVideoNames.length;
         }
-      });
+      }).catch((err) => console.log(err));
     },
     uploadVideo() {
       if (this.videoCount !== this.uploadCount) {

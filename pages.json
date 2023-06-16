@@ -4,7 +4,7 @@
 		},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/data/data",
+			"path": "pages/show/show",
 			"style": {
 				
 			}
@@ -20,7 +20,7 @@
 			"path": "pages/info/info",
 			"style": {}
 		},{
-			"path": "pages/show/show",
+			"path": "pages/data/data",
 			"style": {
 				
 			}
